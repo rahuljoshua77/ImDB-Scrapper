@@ -12,11 +12,14 @@ def scrape(response):
     year = response.html.xpath('(//h1/following-sibling::div/ul/li/a)[1]/text()')[0]
     description = response.html.xpath("//span[@data-testid='plot-l']/text()")[0]
     url_poster = "https://www.imdb.com"+response.html.xpath('(//a[@class="ipc-lockup-overlay ipc-focusable"])[1]')[0].attrs['href']
+    response = session.get(url_poster)
+    urls = response.html.xpath("(//img[contains(@src,'images')])[1]")
+    url_src = str(urls[0]).split("<Element 'img' src='")[1].split("' srcset='")[0]
     id = url_poster.split("/title/")[1].split('/mediaviewer/')[0]
-    return dict({'title':title,
+    return dict({'title':f"{title} ({year})",
                  'year':year,
                  'description':description,
-                 'url_poster':url_poster,
+                 'url_poster':url_src,
                  'id':id
                 })
 
