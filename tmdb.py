@@ -1,6 +1,7 @@
 from requests_html import HTMLSession
 session = HTMLSession()
 import time, csv
+from time import sleep
 headers = {
     'authority': 'www.themoviedb.org',
     'accept': 'text/html, */*; q=0.01',
@@ -69,7 +70,7 @@ def scrapper(page):
             year = response.html.xpath('//span[@class="tag release_date"]/text()')[0].replace("(","").replace(")","")
             title = f"{get_title} ({year})"
             # rating = response.html.xpath('//span[contains(@class,"icon icon-r")]')[0].attrs['class']
-            url_src = "https://www.themoviedb.org"+response.html.xpath('(//img[contains(@class,"poster")])[1]')[0].attrs['src']
+            url_src = "https://www.themoviedb.org"+response.html.xpath('(//img[contains(@class,"poster")])[1]')[0].attrs['data-src']
             id_movie = url.split('/movie/')[1]
             description = response.html.xpath('//div[@class="overview"]/p/text()')[0]
             get_genre = response.html.xpath('//span[@class="genres"]/a/text()')
