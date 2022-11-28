@@ -71,6 +71,7 @@ def scrapper(page):
             title = f"{get_title} ({year})"
             # rating = response.html.xpath('//span[contains(@class,"icon icon-r")]')[0].attrs['class']
             url_src = "https://www.themoviedb.org"+response.html.xpath('(//img[contains(@class,"poster")])[1]')[0].attrs['data-src']
+            url_src= url_src.replace('w300_and_h450_bestv2','w600_and_h900_bestv2')
             id_movie = url.split('/movie/')[1]
             description = response.html.xpath('//div[@class="overview"]/p/text()')[0]
             get_genre = response.html.xpath('//span[@class="genres"]/a/text()')
